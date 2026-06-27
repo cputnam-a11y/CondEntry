@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "cond_entry",
+  "version": "${version}",
+  "name": "Conditional Entrypoints",
+  "description": "Conditional entrypoints for all ages",
+  "authors": [
+    "cputnam-a11y"
+  ],
+  "license": "MIT",
+  "icon": "assets/conditionalentrypoints/icon.png",
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "java": ">=25"
+  },
+  "languageAdapters": {
+    "cond_entry:v1": "io.github.cputnama11y.conditionalentrypoints.impl.v1.ConditionalEntryLanguageAdaptor",
+    "cond_entry:v1:noop": "io.github.cputnama11y.conditionalentrypoints.impl.v1.NoopLanguageAdaptor"
+  }
+}

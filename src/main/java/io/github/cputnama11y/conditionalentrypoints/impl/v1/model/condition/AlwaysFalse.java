@@ -1,0 +1,18 @@
+package io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition;
+
+import fish.cichlidmc.tinycodecs.api.codec.map.MapCodec;
+
+public record AlwaysFalse() implements Condition {
+    public static final AlwaysFalse INSTANCE = new AlwaysFalse();
+    public static final MapCodec<AlwaysFalse> CODEC = MapCodec.unit(AlwaysFalse.INSTANCE);
+
+    @Override
+    public MapCodec<? extends Condition> codec() {
+        return CODEC;
+    }
+
+    @Override
+    public boolean test(Context context) {
+        return false;
+    }
+}
