@@ -2,7 +2,6 @@ package io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition;
 
 import fish.cichlidmc.tinycodecs.api.codec.Codec;
 import fish.cichlidmc.tinycodecs.api.codec.map.MapCodec;
-import net.fabricmc.loader.api.FabricLoader;
 
 import java.util.List;
 

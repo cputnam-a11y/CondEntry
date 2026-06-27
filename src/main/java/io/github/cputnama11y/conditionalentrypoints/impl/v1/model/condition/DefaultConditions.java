@@ -1,6 +1,5 @@
 package io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition;
 
-import fish.cichlidmc.tinycodecs.api.codec.Codec;
 import fish.cichlidmc.tinycodecs.api.codec.map.MapCodec;
 import io.github.cputnama11y.conditionalentrypoints.impl.v1.utils.registry.Id;
 import io.github.cputnama11y.conditionalentrypoints.impl.v1.utils.registry.SimpleRegistry;
