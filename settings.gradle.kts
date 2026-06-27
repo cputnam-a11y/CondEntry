@@ -14,4 +14,4 @@ pluginManagement {
 }
 
 // Should match your modid
-rootProject.name = "conditionalentrypoints"
+rootProject.name = "cond-entry"
