@@ -39,7 +39,7 @@ public class ConditionalEntryLanguageAdaptor implements LanguageAdapter {
     private static EntrypointWithAdaptor getEntrypoint(ModContainer container, String conditionId, String value) {
         var unparsedMeta = map(
                 map(
-                        container.getMetadata().getCustomValue("cond-entry:v0"),
+                        container.getMetadata().getCustomValue("cond-entry:v1"),
                         root -> root.getAsObject().get("metadata")
                 ),
                 meta -> meta.getAsObject().get(conditionId)
