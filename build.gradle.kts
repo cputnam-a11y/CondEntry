@@ -1,3 +1,5 @@
+import jdk.internal.net.http.common.TimeSource.source
+
 plugins {
     id("net.fabricmc.fabric-loom")
     `maven-publish`
@@ -5,6 +7,14 @@ plugins {
 
 version = providers.gradleProperty("mod_version").get()
 group = providers.gradleProperty("maven_group").get()
+sourceSets {
+    create("testmod") {
+        compileClasspath += main.get().compileClasspath
+        runtimeClasspath += main.get().runtimeClasspath
+        compileClasspath += main.get().output
+        runtimeClasspath += main.get().output
+    }
+}
 
 repositories {
     exclusiveContent {
@@ -15,16 +25,32 @@ repositories {
         }
     }
 }
+
 val condEntry = loom.mods.register("cond-entry") {
     sourceSet(sourceSets.main.get())
 }
-
+var testmod = loom.mods.register("testmod") {
+    sourceSet(sourceSets.main.get())
+}
+loom {
+    runs {
+        create("testmod") {
+            client()
+            isIdeConfigGenerated = true
+            name = "Testmod"
+            source(sourceSets.named("testmod").get())
+        }
+    }
+}
 dependencies {
     minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
     implementation("net.fabricmc:fabric-loader:${providers.gradleProperty("loader_version").get()}")
     include(implementation("fish.cichlidmc:tiny-codecs:6.0.0")!!.also {
         condEntry.configure {
-            this.dependency(it)
+            dependency(it)
+        }
+        testmod.configure {
+            dependency(it)
         }
     })
 }

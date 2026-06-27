@@ -14,14 +14,14 @@ import java.util.function.Supplier;
 
 @NullMarked
 public interface SummonValueCodec<T> {
-    ScopedValue<T> value();
+    Supplier<ScopedValue<T>> value();
 
     Optional<Supplier<T>> defaultValue();
 
-    record Map<T>(ScopedValue<T> value, Optional<Supplier<T>> defaultValue) implements SummonValueCodec<T>, MapCodec<T> {
+    record Map<T>(Supplier<ScopedValue<T>> value, Optional<Supplier<T>> defaultValue) implements SummonValueCodec<T>, MapCodec<T> {
         @Override
         public Result<T> decode(JsonObject json) {
-            if (value.isBound()) return Result.success(value.get());
+            if (value.get().isBound()) return Result.success(value.get().get());
             if (defaultValue.isPresent()) return Result.success(defaultValue.orElseThrow().get());
             return Result.error("Unable to summon value");
         }
@@ -32,11 +32,11 @@ public interface SummonValueCodec<T> {
         }
     }
 
-    record Value<T>(ScopedValue<T> value, Optional<Supplier<T>> defaultValue) implements SummonValueCodec<T>, Codec<T> {
+    record Value<T>(Supplier<ScopedValue<T>> value, Optional<Supplier<T>> defaultValue) implements SummonValueCodec<T>, Codec<T> {
 
         @Override
         public Result<T> decode(JsonValue json) {
-            if (value.isBound()) return Result.success(value.get());
+            if (value.get().isBound()) return Result.success(value.get().get());
             if (defaultValue.isPresent()) return Result.success(defaultValue.orElseThrow().get());
             return Result.error("Unable to summon value");
         }
@@ -48,14 +48,26 @@ public interface SummonValueCodec<T> {
     }
 
     static <T> DualCodec<T> of(ScopedValue<T> value) {
-        return new DualCodec<>(new Value<>(value, Optional.empty()), new Map<>(value, Optional.empty()));
+        return of(() -> value);
     }
 
     static <T> DualCodec<T> of(ScopedValue<T> value, T defaultValue) {
-        return new DualCodec<>(new Value<>(value, Optional.of(() -> defaultValue)), new Map<>(value, Optional.of(() -> defaultValue)));
+        return of(value, (Supplier<T>) () -> defaultValue);
+    }
+
+    static <T> DualCodec<T> of(Supplier<ScopedValue<T>> value) {
+        return new DualCodec<>(new Value<>(value, Optional.empty()), new Map<>(value, Optional.empty()));
+    }
+
+    static <T> DualCodec<T> of(Supplier<ScopedValue<T>> value, T defaultValue) {
+        return of(value, (Supplier<T>) () -> defaultValue);
     }
 
     static <T> DualCodec<T> of(ScopedValue<T> value, Supplier<T> defaultValue) {
+        return of(() -> value, defaultValue);
+    }
+
+    static <T> DualCodec<T> of(Supplier<ScopedValue<T>> value, Supplier<T> defaultValue) {
         return new DualCodec<>(new Value<>(value, Optional.of(defaultValue)), new Map<>(value, Optional.of(defaultValue)));
     }
 

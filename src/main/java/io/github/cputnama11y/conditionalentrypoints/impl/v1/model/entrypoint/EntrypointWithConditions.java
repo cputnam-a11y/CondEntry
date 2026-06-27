@@ -5,8 +5,8 @@ import fish.cichlidmc.tinycodecs.api.codec.Codec;
 import fish.cichlidmc.tinycodecs.api.codec.CompositeCodec;
 import fish.cichlidmc.tinycodecs.api.codec.dual.DualCodec;
 import fish.cichlidmc.tinycodecs.api.codec.map.MapCodec;
-import io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition.AllOfCondition;
-import io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition.AlwaysTrue;
+import io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition.builtin.AllOfCondition;
+import io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition.builtin.AlwaysTrue;
 import io.github.cputnama11y.conditionalentrypoints.impl.v1.utils.codec.CodecUtil;
 import io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition.Condition;
 

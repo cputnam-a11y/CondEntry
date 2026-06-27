@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "cond_entry_tests",
+  "version": "♾️",
+  "name": "Conditional Entrypoints Tests",
+  "description": "Tests for conditional entrypoints",
+  "authors": [
+    "cputnam-a11y"
+  ],
+  "license": "MIT",
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "java": ">=25"
+  },
+  "entrypoints": {
+    "main": [
+      {
+        "adapter": "cond_entry:v1",
+        "value": "io.github.cputnama11y.conditionalentrypoints.test.TestEntry1"
+      },
+      {
+        "adapter": "cond_entry:v1:noop",
+        "value": "default"
+      }
+    ]
+  },
+  "custom": {
+    "cond_entry:v1": {
+      "metadata": {
+        "io.github.cputnama11y.conditionalentrypoints.test.TestEntry1": {
+          "conditions": {
+            "type": "not",
+            "value": {
+              "type": "any_mods_loaded",
+              "mods": "fabricloader"
+            }
+          },
+          "else": "default"
+        }
+      }
+    }
+  }
+}

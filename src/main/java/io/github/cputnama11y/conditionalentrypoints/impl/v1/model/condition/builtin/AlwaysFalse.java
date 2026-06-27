@@ -1,6 +1,7 @@
-package io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition;
+package io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition.builtin;
 
 import fish.cichlidmc.tinycodecs.api.codec.map.MapCodec;
+import io.github.cputnama11y.conditionalentrypoints.impl.v1.model.condition.Condition;
 
 public record AlwaysFalse() implements Condition {
     public static final AlwaysFalse INSTANCE = new AlwaysFalse();

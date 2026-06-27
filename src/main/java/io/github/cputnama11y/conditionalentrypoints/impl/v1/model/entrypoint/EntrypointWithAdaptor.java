@@ -14,7 +14,7 @@ public record EntrypointWithAdaptor(String value, String adaptor) {
             EntrypointWithAdaptor::new
     );
     static final DualCodec<EntrypointWithAdaptor> TOP_LEVEL_CODEC = CompositeCodec.of(
-            SummonValueCodec.of(EntrypointWithConditions.TOP_LEVEL_ENTRYPOINT).mapCodec(),
+            SummonValueCodec.of(() -> EntrypointWithConditions.TOP_LEVEL_ENTRYPOINT).mapCodec(),
             EntrypointWithAdaptor::value,
             Codec.STRING.optional("default").fieldOf("adaptor"),
             EntrypointWithAdaptor::adaptor,
